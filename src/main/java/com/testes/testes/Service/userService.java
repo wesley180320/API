@@ -36,5 +36,11 @@ public class userService {
        return userRespository.save(user);
     }
 
+    @Transactional
+    public void delet(Integer id){
+
+        userRespository.deleteById(id);
+
+    }
 
 }

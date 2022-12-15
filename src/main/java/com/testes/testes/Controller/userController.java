@@ -47,4 +47,40 @@ public class userController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updtate(@PathVariable Integer id, @RequestBody userDTO userDTO){
+
+        Optional<user> user = userService.findById(id);
+
+        if(!user.isPresent()){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        user u1 = user.get();
+
+        u1.setUserName(userDTO.getUserName());
+        u1.setPassword(userDTO.getPassword());
+
+        return ResponseEntity.ok().body(userService.save(u1));
+
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deletById(@PathVariable Integer id){
+
+
+        Optional<user> user = userService.findById(id);
+
+        if(!user.isPresent()){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id not found");
+
+        }
+
+        userService.delet(id);
+
+        return ResponseEntity.ok().body("Id deleted " + id);
+
+    }
+
 }
