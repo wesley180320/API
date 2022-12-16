@@ -3,7 +3,6 @@ package com.testes.testes.Service;
 import com.testes.testes.DTO.userDTO;
 import com.testes.testes.Repository.userRespository;
 import com.testes.testes.domain.user;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,10 +65,31 @@ class userServiceTest {
 
     @Test
     void save() {
+
+
+        Mockito.when(userRespository.save(user)).thenReturn(user);
+
+        user reponse =  userService.save(user);
+
+        Assertions.assertNotNull(reponse);
+        Assertions.assertEquals(com.testes.testes.domain.user.class, reponse.getClass());
+        Assertions.assertEquals(user.getId(), reponse.getId());
+        Assertions.assertEquals(user.getUserName(), reponse.getUserName());
+        Assertions.assertEquals(user.getPassword(), reponse.getPassword());
     }
 
     @Test
     void delet() {
+
+        Mockito.when(userRespository.findById(Mockito.anyInt())).thenReturn(userOptional);
+
+        Mockito.doNothing().when(userRespository).deleteById(Mockito.anyInt());
+
+        userService.delet(user.getId());
+
+        Mockito.verify(userRespository,Mockito.times(1)).deleteById(Mockito.anyInt());
+
+
     }
 
     private void startUser(){
