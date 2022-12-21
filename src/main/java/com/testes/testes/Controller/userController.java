@@ -10,11 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -26,9 +24,9 @@ public class userController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> findByID(@PathVariable Integer id) {
         Optional<user> user = userService.findById(id);
-        if (!user.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found");
-        }
+//        if (!user.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found");
+//        }
         return ResponseEntity.ok().body(user);
     }
 

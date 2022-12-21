@@ -26,7 +26,6 @@ public class userService {
 
     @Transactional
     public List<user> findAll(){
-
         return userRespository.findAll();
     }
 
