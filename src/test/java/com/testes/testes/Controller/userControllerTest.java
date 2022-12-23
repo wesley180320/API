@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -77,14 +78,40 @@ class userControllerTest {
 
     @Test
     void save() {
+        Mockito.when(userService.save(Mockito.any())).thenReturn(user);
+
+        ResponseEntity<Object> response =  controller.save(userDTO);
+
+        Assertions.assertNotNull(response.getBody());
+
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+
     }
 
     @Test
     void updtate() {
+
+        Mockito.when(userService.save(user)).thenReturn(user);
+
+        ResponseEntity<Object> response = controller.updtate(user.getId(),userDTO);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertEquals(ResponseEntity.class, response.getClass());
+
     }
 
     @Test
     void deletById() {
+
+        Mockito.doNothing().when(userService).delet(Mockito.anyInt());
+
+        ResponseEntity<Object> response = controller.deletById(user.getId());
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(ResponseEntity.class,response.getClass());
+
     }
 
     private void startUser(){
